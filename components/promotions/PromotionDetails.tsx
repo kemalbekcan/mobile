@@ -48,7 +48,7 @@ const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
   );
 };
 
-export default PromotionDetails;
+export default React.memo(PromotionDetails);
 
 const styles = StyleSheet.create({
   details: {

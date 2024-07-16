@@ -6,16 +6,18 @@ type ItemProps = { title: string; img: string };
 
 const TagList = ({ title, img }: ItemProps) => {
   return (
-    <>
-      <View style={styles.item}>
-        <Image style={styles.itemImg} src={img} />
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    </>
+    <View style={styles.item}>
+      <Image style={styles.itemImg} src={img} />
+      <Text style={styles.title}>{title}</Text>
+    </View>
   );
 };
 
-export default TagList;
+const propsAreEqual = (prevProps: ItemProps, nextProps: ItemProps) => {
+  return prevProps.title === nextProps.title && prevProps.img === nextProps.img;
+};
+
+export default React.memo(TagList, propsAreEqual);
 
 const styles = StyleSheet.create({
   item: {
