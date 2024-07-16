@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import AxiosInstance from "@/libs/axios";
 
 interface IDetails {
@@ -9,10 +9,10 @@ interface IDetails {
 
 export function usePromotionDetails(id?: string | string[]) {
   const [details, setDetails] = useState<IDetails | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await AxiosInstance.get("/promotions", {
@@ -26,11 +26,11 @@ export function usePromotionDetails(id?: string | string[]) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return { details, error, loading };
 }

@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import AxiosInstance from "@/libs/axios";
 
-export function useTags() {
-  const [tags, setTags] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+type Tag = {
+  Id: string;
+  Name: string;
+  IconUrl: string;
+};
 
-  const fetchData = async () => {
+export function useTags() {
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [error, setError] = useState<Error | null>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await AxiosInstance.get("/tags/list");
@@ -16,11 +22,11 @@ export function useTags() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return { tags, error, loading };
 }

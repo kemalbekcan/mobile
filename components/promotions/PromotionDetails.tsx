@@ -19,12 +19,11 @@ interface IDetails {
 
 interface PromotionDetailsProps {
   details?: IDetails | null;
-  loading: boolean;
 }
 
-const PromotionDetails: FC<PromotionDetailsProps> = ({ details, loading }) => {
-  if (!details || loading == true) {
-    return <Text>Loading</Text>;
+const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
+  if (!details) {
+    return <Text>Err</Text>;
   }
 
   return (

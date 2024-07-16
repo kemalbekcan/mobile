@@ -1,7 +1,5 @@
 import React from "react";
 
-import { StyleSheet } from "react-native";
-
 import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import Header from "@/components/header/Header";
 import Tags from "@/components/tag/Tags";
@@ -16,12 +14,3 @@ export default function HomeScreen() {
     </ThemedSafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  carousel: {
-    marginBottom: 50,
-  },
-  pagination: {
-    marginTop: 10,
-  },
-});

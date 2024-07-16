@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import AxiosInstance from "@/libs/axios";
 
 type Promotion = {
@@ -8,10 +8,10 @@ type Promotion = {
 
 export function usePromotions() {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await AxiosInstance.get("/promotions/list?Channel=PWA");
@@ -21,11 +21,11 @@ export function usePromotions() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return { promotions, error, loading };
 }
