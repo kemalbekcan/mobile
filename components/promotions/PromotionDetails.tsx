@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import {
   StyleSheet,
@@ -28,17 +28,16 @@ const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
     return <Text>Err</Text>;
   }
 
-  const oneDay = 24 * 60 * 60 * 1000;
+  const betweenDates = useMemo(() => {
+    const oneDay = 24 * 60 * 60 * 1000;
 
-  const today = new Date();
-  const endDate = new Date(details.EndDate);
-  console.log("today", today);
+    const today = new Date();
+    const endDate = new Date(details.EndDate);
 
-  console.log("endDATE", endDate);
+    const diffDays = Math.round(Math.abs((today - endDate) / oneDay));
 
-  const diffDays = Math.round(Math.abs((today - endDate) / oneDay));
-
-  console.log("diff", diffDays);
+    return diffDays;
+  }, [details.EndDate]);
 
   return (
     <View style={styles.details}>
@@ -55,7 +54,7 @@ const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
           source={{ uri: details?.BrandIconUrl }}
         />
         <View style={styles.dayContent}>
-          <Text style={styles.day}>son 12 gün</Text>
+          <Text style={styles.day}>son {betweenDates} gün</Text>
         </View>
       </View>
 
