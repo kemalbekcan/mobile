@@ -13,7 +13,7 @@ export const colorStyles = (colorText: any) => {
 const CarouselCardItem = ({ item, index }: any) => {
   const bgColorStyles = (colorText: any) => {
     return {
-      backgroundColor: colorText,
+      backgroundColor: colorText || "black",
     };
   };
   return (
@@ -23,19 +23,16 @@ const CarouselCardItem = ({ item, index }: any) => {
         <Text style={styles.header}>
           <HTMLView value={item.Title} stylesheet={styles} />
         </Text>
-        <Text
-          style={[styles.more, colorStyles(item.ListButtonTextBackGroudColor)]}
-          onPress={() => console.log("tiklandi")}
+
+        <Link
+          style={[styles.more, colorStyles(item?.ListButtonTextBackGroudColor)]}
+          href={{
+            pathname: "/[id]",
+            params: { id: item.Id },
+          }}
         >
-          <Link
-            href={{
-              pathname: "/[id]",
-              params: { id: item.Id },
-            }}
-          >
-            Daha Daha
-          </Link>
-        </Text>
+          Daha Daha
+        </Link>
       </View>
 
       <Text style={styles.body}>{item.body}</Text>
