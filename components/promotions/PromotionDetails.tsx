@@ -17,6 +17,7 @@ interface IDetails {
   Title: string;
   Description: string;
   BrandIconUrl: string;
+  EndDate: string;
 }
 
 interface PromotionDetailsProps {
@@ -34,7 +35,9 @@ const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
     const today = new Date();
     const endDate = new Date(details.EndDate);
 
-    const diffDays = Math.round(Math.abs((today - endDate) / oneDay));
+    const diffDays = Math.round(
+      Math.abs((today.getTime() - endDate.getTime()) / oneDay)
+    );
 
     return diffDays;
   }, [details.EndDate]);
