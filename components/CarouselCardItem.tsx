@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, Dimensions, Image } from "react-native";
 import { Link } from "expo-router";
 import HTMLView from "react-native-htmlview";
 
-export const SLIDER_WIDTH = Dimensions.get("window").width + 80;
+export const SLIDER_WIDTH = Dimensions.get("window").width;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 export const colorStyles = (colorText: any) => {
   return {
@@ -17,27 +17,32 @@ const CarouselCardItem = ({ item, index }: any) => {
     };
   };
   return (
-    <View style={styles.container} key={index}>
-      <Image source={{ uri: item.ImageUrl }} style={styles.image} />
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>
-          <HTMLView value={item.Title} stylesheet={styles} />
-        </Text>
+    <View style={styles.card}>
+      <View style={styles.container} key={index}>
+        <Image source={{ uri: item.ImageUrl }} style={styles.image} />
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>
+            <HTMLView value={item.Title} stylesheet={styles} />
+          </Text>
 
-        <Link
-          style={[styles.more, colorStyles(item?.ListButtonTextBackGroudColor)]}
-          href={{
-            pathname: "/[id]",
-            params: { id: item.Id },
-          }}
-        >
-          Daha Daha
-        </Link>
+          <Link
+            style={[
+              styles.more,
+              colorStyles(item?.ListButtonTextBackGroudColor),
+            ]}
+            href={{
+              pathname: "/[id]",
+              params: { id: item.Id },
+            }}
+          >
+            Daha Daha
+          </Link>
+          <Text style={styles.body}>{item.body}</Text>
+        </View>
       </View>
-
-      <Text style={styles.body}>{item.body}</Text>
+      
       <View
-        style={[styles.card, bgColorStyles(item.ListButtonTextBackGroudColor)]}
+        style={[styles.bgCard, bgColorStyles(item.ListButtonTextBackGroudColor)]}
       ></View>
     </View>
   );
@@ -55,15 +60,19 @@ const styles = StyleSheet.create({
     color: "black",
   },
   card: {
-    borderRadius: 8,
-    position: "absolute",
+    position: 'relative',
     width: ITEM_WIDTH,
+  },
+  bgCard: {
+    borderRadius: 30,
+    position: "absolute",
+    width: "100%",
     left: 0,
-    bottom: -30,
-    height: "100%",
-    transform: "skewY(5deg)",
-    zIndex: -999,
-    elevation: 2,
+    bottom: -26,
+    height: 100,
+    transform: "skewY(4deg)",
+    zIndex: 1,
+    elevation: 1,
   },
   container: {
     position: "relative",
@@ -79,23 +88,23 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 1,
+    elevation: 7,
     zIndex: 7,
-    marginHorizontal: -40,
+    // marginHorizontal: -40,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
   },
   image: {
-    width: ITEM_WIDTH,
+    width: "auto",
     height: 300,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    borderBottomLeftRadius: 100,
+    borderWidth: 1,
   },
   headerContainer: {
-    position: "relative",
-    zIndex: 10,
-    elevation: 10,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    height: "39%",
     backgroundColor: "white",
   },
   header: {
