@@ -57,7 +57,8 @@ const Promotions = () => {
             height: 8,
             borderRadius: 5,
             marginHorizontal: 0,
-            backgroundColor: promotions[index]?.ListButtonTextBackGroudColor,
+            backgroundColor:
+              promotions[index]?.ListButtonTextBackGroudColor || "black",
           }}
           inactiveDotStyle={{
             width: 8,
