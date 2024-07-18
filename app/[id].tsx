@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import PromotionDetails from "@/components/promotions/PromotionDetails";
-import { StatusBar } from "expo-status-bar";
 import usePromotionDetails from "@/hooks/usePromotionDetails";
 
 export default function Page() {
@@ -28,10 +27,10 @@ export default function Page() {
 
   return (
     <ThemedSafeAreaView>
-      <StatusBar style="auto" />
       <Stack.Screen
         options={{
           title: "Promotion Details",
+          headerShown: false,
         }}
       />
 
