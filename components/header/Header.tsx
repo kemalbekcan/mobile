@@ -1,9 +1,18 @@
-import { Image, StyleSheet, Alert, TouchableOpacity } from "react-native";
-
+import { useEffect } from "react";
+import { Image, StyleSheet, View, TouchableOpacity } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
+import { MainContext, useContext } from "@/store";
 
 const Header = () => {
+  const [state, dispatch] = useContext<any>(MainContext);
+
+  const { auth } = state;
+
+  useEffect(() => {
+    console.log("auth", auth);
+  }, [auth]);
+
   return (
     <ThemedView style={styles.nav}>
       <ThemedView>
@@ -12,20 +21,32 @@ const Header = () => {
           style={styles.logo}
         />
       </ThemedView>
+
       <ThemedView style={styles.navigationActions}>
-        <TouchableOpacity
-          style={styles.button}
-          accessibilityLabel="Learn more about this purple button"
-          onPress={() => Alert.alert("Simple Button pressed")}
-        >
-          <ThemedText style={styles.buttonText}>Giriş Yap</ThemedText>
-        </TouchableOpacity>
+        {!auth && (
+          <TouchableOpacity
+            style={styles.button}
+            accessibilityLabel="Learn more about this purple button"
+            onPress={() =>
+              dispatch({
+                type: "TOGGLE_AUTH",
+              })
+            }
+          >
+            <ThemedText style={styles.buttonText}>Giriş Yap</ThemedText>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           style={styles.buttonCircle}
           accessibilityLabel="Profile"
-          onPress={() => Alert.alert("Simple Button pressed")}
+          onPress={() =>
+            dispatch({
+              type: "TOGGLE_AUTH",
+            })
+          }
         >
+          <View style={auth && styles.isLogin}></View>
           <Image source={require("@/assets/images/profile.png")} />
         </TouchableOpacity>
       </ThemedView>
@@ -64,6 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonCircle: {
+    position: "relative",
     width: 40,
     height: 40,
     borderRadius: 40,
@@ -72,6 +94,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  isLogin: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 12,
+    height: 12,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 12,
+    backgroundColor: "#009639",
   },
   buttonText: {
     color: "white",
