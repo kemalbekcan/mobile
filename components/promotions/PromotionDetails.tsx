@@ -16,12 +16,12 @@ interface IDetails {
   ImageUrl: string;
   Title: string;
   Description: string;
-  BrandIconUrl: string;
+  BrandIconUrl?: string;
   EndDate: string;
 }
 
 interface PromotionDetailsProps {
-  details?: IDetails | null;
+  details?: IDetails | null | undefined;
 }
 
 const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
@@ -33,7 +33,7 @@ const PromotionDetails: FC<PromotionDetailsProps> = ({ details }) => {
     const oneDay = 24 * 60 * 60 * 1000;
 
     const today = new Date();
-    const endDate = new Date(details.EndDate);
+    const endDate = new Date(details?.EndDate);
 
     const diffDays = Math.round(
       Math.abs((today.getTime() - endDate.getTime()) / oneDay)
